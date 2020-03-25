@@ -1,6 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import './plugins/element.js'
+
+import axios from 'axios'
+Vue.prototype.$http = axios
+axios.defaults.baseURL = '127.0.0.1:8081'
+
+//引入全局样式表
+import '@/assets/css/global.css'
 
 Vue.config.productionTip = false
 
