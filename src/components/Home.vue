@@ -74,64 +74,64 @@
                     data: {
                         data: [
                             {
-                                id: 104,
+                                id: 101,
                                 authName: "用户管理",
                                 path: "users",
                                 children: [
                                     {
-                                        id: 0,
+                                        id: 1,
                                         authName: "用户列表",
                                         path: "users",
                                     }
                                 ]
                             },
                             {
-                                id: 103,
+                                id: 102,
                                 authName: "权限管理",
                                 path: "rights",
                                 children: [
                                     {
-                                        id: 1,
+                                        id: 2,
                                         authName: "权限列表",
                                         path: "rights",
                                     },
                                     {
-                                        id: 2,
+                                        id: 3,
                                         authName: "角色列表",
-                                        path: "rights",
+                                        path: "roles",
                                     }
                                 ]
                             },
                             {
-                                id: 101,
+                                id: 103,
                                 authName: "商品管理",
-                                path: "goods",
+                                path: "",
                                 children: [
                                     {
-                                        id: 3,
-                                        authName: "商品列表",
-                                        path: "rights",
-                                    },
-                                    {
                                         id: 4,
-                                        authName: "分类参数",
-                                        path: "rights",
+                                        authName: "商品列表",
+                                        path: "4",
                                     },
                                     {
                                         id: 5,
+                                        authName: "分类参数",
+                                        path: "5",
+                                    },
+                                    {
+                                        id: 6,
                                         authName: "商品分类",
-                                        path: "rights",
+                                        path: "6",
                                     }
                                 ]
                             },
                             {
-                                id: 102,
+                                id: 104,
                                 authName: "订单管理",
                                 path: "orders",
                                 children: []
                             },
                             {
-                                id: 145,
+                                id: 105,
                                 authName: "统计数据",
                                 path: "reports",
                                 children: []

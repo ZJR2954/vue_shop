@@ -43,7 +43,8 @@
                                    @click="removeUserById(scope.row.id)"></el-button>
                         <!--分配角色按钮-->
                         <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
-                            <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
+                            <el-button type="warning" icon="el-icon-setting" size="mini"
+                                       @click="setRole(scope.row)"></el-button>
                         </el-tooltip>
                     </template>
                 </el-table-column>
@@ -106,6 +107,30 @@
                 <el-button type="primary" @click="editUserInfo">确 定</el-button>
             </span>
         </el-dialog>
+        <!--分配角色的对话框-->
+        <el-dialog
+                title="分配角色"
+                :visible.sync="setRoleDialogVisible"
+                width="50%" @close="setRoleDialogClosed">
+            <div>
+                <p>当前的用户：{{userInfo.username}}</p>
+                <p>当前的角色：{{userInfo.role_name}}</p>
+                <p>分配新角色：
+                    <el-select v-model="selectedRoleId" placeholder="请选择">
+                        <el-option
+                                v-for="item in rolesList"
+                                :key="item.id"
+                                :label="item.roleName"
+                                :value="item.id">
+                        </el-option>
+                    </el-select>
+                </p>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="setRoleDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="saveRoleInfo">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -124,7 +149,7 @@
 
                 cb(new Error('请输入合法的邮箱'));
             }
-            //验证手机号
+            //验证手机号的规则
             var checkMobile = (rule, value, cb) => {
                 //验证手机号的正则表达式
                 const regMobile = /^(0|86|17951)?(13[0-9]|15[0123456789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
@@ -181,7 +206,15 @@
                         {required: true, message: '请输入手机号', trigger: 'blur'},
                         {validator: checkMobile, trigger: 'blur'}
                     ]
-                }
+                },
+                //控制分配角色对话框的显示与隐藏
+                setRoleDialogVisible: false,
+                //需要被分配角色的用户信息
+                userInfo: {},
+                //所有角色的数据列表
+                rolesList: [],
+                //已选中的角色id值
+                selectedRoleId: ''
             }
         },
         created() {
@@ -336,20 +369,111 @@
                 }
                 // const {data: res} = await this.$http.delete('users/' + id);
                 const {data: res} = {data: {meta: {status: 200}}};
-                if(res.meta.status !== 200) {
+                if (res.meta.status !== 200) {
                     return this.$message.error('删除用户失败');
                 }
                 this.$message.success('删除用户成功');
                 this.getUserList();
+            },
+            //展示分配角色的对话框
+            // async setRole(userInfo) {
+            setRole(userInfo) {
+                this.userInfo = userInfo;
+
+                //在展示对话框之前获取所有角色的列表
+                //const {data: res} = await this.$http.get('roles');
+                const {data: res} = {
+                    data: {
+                        data: [
+                            {
+                                id: 1,
+                                roleDesc: "技术负责人",
+                                roleName: "主管",
+                                children: [
+                                    {
+                                        id: 101,
+                                        authName: "商品管理",
+                                        path: null,
+                                        children: [
+                                            {
+                                                id: 102,
+                                                authName: "商品列表",
+                                                path: null,
+                                                children: [
+                                                    {
+                                                        id: 103,
+                                                        authName: "添加商品",
+                                                        path: null
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                id: 2,
+                                roleDesc: "测试用户2的描述",
+                                roleName: "测试用户2",
+                                children: [
+                                    {
+                                        id: 101,
+                                        authName: "商品管理",
+                                        path: null,
+                                        children: [
+                                            {
+                                                id: 102,
+                                                authName: "商品列表",
+                                                path: null,
+                                                children: [
+                                                    {
+                                                        id: 103,
+                                                        authName: "添加商品",
+                                                        path: null
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        meta: {status: 200}
+                    }
+                };
+                if (res.meta.status !== 200) {
+                    return this.$message.error('获取角色列表失败');
+                }
+                this.rolesList = res.data;
+
+                this.setRoleDialogVisible = true;
+            },
+            //点击按钮，分配角色
+            // async saveRoleInfo() {
+            saveRoleInfo() {
+                if (!this.selectedRoleId) {
+                    return this.$message.error('请选择要分配的角色');
+                }
+                // const {data: res} = await this.$http.put(`users/${this.userInfo.id}`, {rid: this.selectedRoleId});
+                const {data: res} = {data: {meta: {status: 200}}};
+                if (res.meta.status !== 200) {
+                    this.$message.error('更新角色失败');
+                }
+                this.$message.success('更新角色成功');
+                this.getUserList();
+
+                this.setRoleDialogVisible = false;
+            },
+            //监听分配角色对话框的关闭事件
+            setRoleDialogClosed() {
+                this.selectedRoleId = ''
+                this.userInfo = {};
             }
 
         }
     }
 </script>
 
-<
-style
-lang = "less"
-scoped >
+<style lang="less" scoped>
 
-< /style>
+</style>
