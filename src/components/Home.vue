@@ -120,7 +120,7 @@
                                     {
                                         id: 6,
                                         authName: "商品分类",
-                                        path: "6",
+                                        path: "categories",
                                     }
                                 ]
                             },
