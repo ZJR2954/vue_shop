@@ -115,7 +115,7 @@
                                     {
                                         id: 5,
                                         authName: "分类参数",
-                                        path: "5",
+                                        path: "params",
                                     },
                                     {
                                         id: 6,
