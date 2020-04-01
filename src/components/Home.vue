@@ -110,7 +110,7 @@
                                     {
                                         id: 4,
                                         authName: "商品列表",
-                                        path: "4",
+                                        path: "goods",
                                     },
                                     {
                                         id: 5,
