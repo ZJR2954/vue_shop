@@ -140,7 +140,13 @@
                                 id: 105,
                                 authName: "统计数据",
                                 path: "reports",
-                                children: []
+                                children: [
+                                    {
+                                        id: 8,
+                                        authName: "数据报表",
+                                        path: "reports",
+                                    }
+                                ]
                             }
                         ], meta: {msg: "获取菜单列表成功", status: 200}
                     }
