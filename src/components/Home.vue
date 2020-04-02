@@ -128,7 +128,13 @@
                                 id: 104,
                                 authName: "订单管理",
                                 path: "orders",
-                                children: []
+                                children: [
+                                    {
+                                        id: 7,
+                                        authName: "订单管理",
+                                        path: "orders",
+                                    }
+                                ]
                             },
                             {
                                 id: 105,
